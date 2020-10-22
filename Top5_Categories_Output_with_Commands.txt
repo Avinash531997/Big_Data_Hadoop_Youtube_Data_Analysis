@@ -1,0 +1,153 @@
+
+C:\Users\hp>ssh iitp@172.16.27.178
+iitp@172.16.27.178's password:
+Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.15.0-118-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+153 packages can be updated.
+1 update is a security update.
+
+New release '18.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Last login: Thu Oct  8 22:36:46 2020 from 192.168.101.116
+iitp@iitp-virtual-machine:~$ cd Youtube
+iitp@iitp-virtual-machine:~/Youtube$ nano Top5_categories.java
+iitp@iitp-virtual-machine:~/Youtube$ iitp@iitp-virtual-machine:~/Youtube$ cd /home/iitp/hadoop-2.6.0/sbin
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/sbin$ ./start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+Starting namenodes on [localhost]
+iitp@localhost's password:
+localhost: namenode running as process 8590. Stop it first.
+iitp@localhost's password:
+localhost: datanode running as process 8760. Stop it first.
+Starting secondary namenodes [0.0.0.0]
+iitp@0.0.0.0's password:
+0.0.0.0: secondarynamenode running as process 9061. Stop it first.
+starting yarn daemons
+resourcemanager running as process 9202. Stop it first.
+iitp@localhost's password:
+localhost: nodemanager running as process 9618. Stop it first.
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/sbin$ cd /home/iitp/hadoop-2.6.0/bin
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop fs -mkdir /Youtube
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop fs -mkdir /Youtube/inputdata
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ cd /home/iitp/hadoop-2.6.0/bin
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop dfs -put /home/iitp/Youtube/inputdata/youtubedata.txt /Youtube/inputdata
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ export HADOOP_CLASSPATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/lib/tools.jar
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ cd /home/iitp/hadoop-2.6.0/bin
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop com.sun.tools.javac.Main /home/iitp/Youtube/Top5_categories.java
+Note: /home/iitp/Youtube/Top5_categories.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ cd /home/iitp/Youtube
+iitp@iitp-virtual-machine:~/Youtube$ jar cf T5Cat.jar Top5_categories*.class
+iitp@iitp-virtual-machine:~/Youtube$ cd /home/iitp/hadoop-2.6.0/bin
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop jar /home/iitp/Youtube/T5Cat.jar Top5_categories /Youtube/inputdata/ /Youtube/outputdata
+20/10/08 22:52:14 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+20/10/08 22:52:15 WARN mapreduce.JobSubmitter: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+20/10/08 22:52:15 INFO input.FileInputFormat: Total input paths to process : 1
+20/10/08 22:52:15 INFO mapreduce.JobSubmitter: number of splits:1
+20/10/08 22:52:15 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1602133726714_0006
+20/10/08 22:52:16 INFO impl.YarnClientImpl: Submitted application application_1602133726714_0006
+20/10/08 22:52:16 INFO mapreduce.Job: The url to track the job: http://iitp-virtual-machine:8088/proxy/application_1602133726714_0006/
+20/10/08 22:52:16 INFO mapreduce.Job: Running job: job_1602133726714_0006
+20/10/08 22:52:22 INFO mapreduce.Job: Job job_1602133726714_0006 running in uber mode : false
+20/10/08 22:52:22 INFO mapreduce.Job:  map 0% reduce 0%
+20/10/08 22:52:27 INFO mapreduce.Job:  map 100% reduce 0%
+20/10/08 22:52:33 INFO mapreduce.Job:  map 100% reduce 100%
+20/10/08 22:52:33 INFO mapreduce.Job: Job job_1602133726714_0006 completed successfully
+20/10/08 22:52:33 INFO mapreduce.Job: Counters: 49
+        File System Counters
+                FILE: Number of bytes read=73143
+                FILE: Number of bytes written=358197
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=965409
+                HDFS: Number of bytes written=257
+                HDFS: Number of read operations=6
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=3364
+                Total time spent by all reduces in occupied slots (ms)=3518
+                Total time spent by all map tasks (ms)=3364
+                Total time spent by all reduce tasks (ms)=3518
+                Total vcore-seconds taken by all map tasks=3364
+                Total vcore-seconds taken by all reduce tasks=3518
+                Total megabyte-seconds taken by all map tasks=3444736
+                Total megabyte-seconds taken by all reduce tasks=3602432
+        Map-Reduce Framework
+                Map input records=4100
+                Map output records=4100
+                Map output bytes=64937
+                Map output materialized bytes=73143
+                Input split bytes=120
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=15
+                Reduce shuffle bytes=73143
+                Reduce input records=4100
+                Reduce output records=15
+                Spilled Records=8200
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=94
+                CPU time spent (ms)=1030
+                Physical memory (bytes) snapshot=331927552
+                Virtual memory (bytes) snapshot=3761971200
+                Total committed heap usage (bytes)=222429184
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=965289
+        File Output Format Counters
+                Bytes Written=257
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop fs -cat /Youtube/outputdata/part-r-00000 | sort n k2 r | head n5
+sort: cannot read: n: No such file or directory
+head: cannot open 'n5' for reading: No such file or directory
+cat: Unable to write to output stream.
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ $ bin/hadoop fs -cat /Youtube/outputdata/part-r-00000 | sort n k2 r | head n5
+head: sort: cannot open 'n5' for reading: No such file or directory
+cannot read: n: No such file or directory
+$: command not found
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop fs -cat /Youtube/outputdata/part-r-00000
+ UNA    32
+Autos & Vehicles        77
+Comedy  420
+Education       65
+Entertainment   911
+Film & Animation        261
+Howto & Style   138
+Music   870
+News & Politics 343
+Nonprofits & Activism   43
+People & Blogs  399
+Pets & Animals  95
+Science & Technology    80
+Sports  253
+Travel & Events 113
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$ ./hadoop fs -cat /Youtube/outputdata/part-r-00000 |sort -n -k2 -r | head -n5
+Entertainment   911
+Music   870
+Comedy  420
+Sports  253
+Education       65
+iitp@iitp-virtual-machine:~/hadoop-2.6.0/bin$
+
+
+
